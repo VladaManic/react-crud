@@ -1,23 +1,46 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from './components/layout/Header'
+import { Route, Switch, useHistory } from 'react-router-dom';
+
+import Home from './pages/Home';
+import Add from './pages/Add';
+import About from './pages/About';
 
 function App() {
+  const history = useHistory();
+
+  function addItem(item){
+    // const id = Math.floor(Math.random() * 10000) + 1
+    // const newItem = { id, ...item }
+    // setData([...data, newItem])
+    fetch(
+      'https://react-crud-cd5ea-default-rtdb.firebaseio.com/items.json',
+      {
+        method: 'POST',
+        body: JSON.stringify(item),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    ).then(() => {
+      history.replace('/')
+    });
+  } 
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Switch>
+        <Route path='/' exact>
+          <Home />
+        </Route>
+        <Route path='/add'>
+          <Add onAdd={addItem} />
+        </Route>
+        <Route path='/about'>
+          <About />
+        </Route>
+      </Switch>
     </div>
   );
 }
