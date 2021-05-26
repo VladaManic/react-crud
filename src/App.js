@@ -5,6 +5,7 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import Home from './pages/Home';
 import Add from './pages/Add';
 import About from './pages/About';
+import Single from './pages/Single';
 
 function App() {
   const history = useHistory();
@@ -39,6 +40,9 @@ function App() {
         </Route>
         <Route path='/about'>
           <About />
+        </Route>
+        <Route path='/single/:id'>
+          <Single />
         </Route>
       </Switch>
     </div>

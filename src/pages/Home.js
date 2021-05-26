@@ -15,7 +15,7 @@ const Home = (props) => {
 		}).then((data) => {
 			const items = [];
 			for(const key in data){
-				const item ={
+				const item = {
 					id: key,
 					...data[key]
 				}
