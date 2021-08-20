@@ -9,7 +9,7 @@ const Single = (props) => {
 	//getting param from URL
 	const { id } = useParams();
 	const history = useHistory();
-	const [item, setItem] = useState([]);
+	const [item, setItem] = useState({text: '', title: ''});
 
 	const onSubmit = (e) => {
 		e.preventDefault()
@@ -54,7 +54,7 @@ const Single = (props) => {
 		<div className='add-form'>
 			<form onSubmit={onSubmit}>
 				<div>
-					<textarea value={item.title} name="title" onChange={(e) => handleInputChange(e)} />
+					<input type="text" value={item.title} name="title" onChange={(e) => handleInputChange(e)} />
 				</div>
 				<div>
 					<textarea value={item.text} name="text" onChange={(e) => handleInputChange(e)} />
