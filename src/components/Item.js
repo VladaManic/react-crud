@@ -4,13 +4,13 @@ import DeleteButton from './DeleteButton';
 
 const Item = (props) => {
 	return (
-		<Link to={`/single/${props.item.id}`}>
-			<div className='item-wrap'>
+		<div className='item-wrap'>
+			<Link to={`/single/${props.item.id}`}>
 				<h2>{props.item.title}</h2>
 				<p>{props.item.text}</p>
-				<DeleteButton id={props.item.id} onDelete={props.onDelete} />
-			</div>
-		</Link>
+			</Link>
+			<DeleteButton id={props.item.id} onDelete={props.onDelete} />
+		</div>
 	)
 }
 

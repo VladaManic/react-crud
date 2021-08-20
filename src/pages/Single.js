@@ -10,7 +10,16 @@ const Single = (props) => {
 	const { id } = useParams();
 	const history = useHistory();
 	const [item, setItem] = useState([]);
-	
+
+	const onSubmit = (e) => {
+		e.preventDefault()
+
+		if(!item.title || !item.text){
+			alert('You have to fill all fields')
+		}
+
+		props.onUpdate({id, item})
+	}
 
 	useEffect(() => {
 		fetch(
@@ -33,13 +42,28 @@ const Single = (props) => {
 		})
   }
 
+	//Enabling editing input fields in form
+	function handleInputChange(e){
+		const target = e.target;
+		const value = target.value;
+		const name = target.name;
+		setItem({...item, [name]: value});
+	}
+
 	return (
-		<div>
-			<h2>{item.title}</h2>
-			<p>{item.text}</p>
-			<div>
-				<DeleteButton id={id} onDelete={deleteItem} />
-			</div>
+		<div className='add-form'>
+			<form onSubmit={onSubmit}>
+				<div>
+					<textarea value={item.title} name="title" onChange={(e) => handleInputChange(e)} />
+				</div>
+				<div>
+					<textarea value={item.text} name="text" onChange={(e) => handleInputChange(e)} />
+				</div>
+				<div>
+					<input type='submit' value='Save' />
+					<DeleteButton id={id} onDelete={deleteItem} />
+				</div>
+			</form>
 		</div>
 	)
 }

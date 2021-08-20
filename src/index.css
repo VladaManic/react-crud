@@ -13,3 +13,9 @@
 	margin-right: 50px;
 	font-size: 30px;
 }
+
+.delete-btn {
+	padding: 5px;
+	border: 1px solid black;
+	cursor: pointer;
+}

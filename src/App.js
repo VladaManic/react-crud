@@ -28,6 +28,21 @@ function App() {
     });
   } 
 
+  function upadeteItem(obj){
+    fetch(
+      `https://react-crud-cd5ea-default-rtdb.firebaseio.com/items/${obj.id}.json`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(obj.item),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    ).then(() => {
+      history.replace('/')
+    });
+  }
+
   return (
     <div className="App">
       <Header />
@@ -42,7 +57,7 @@ function App() {
           <About />
         </Route>
         <Route path='/single/:id'>
-          <Single />
+          <Single onUpdate={upadeteItem} />
         </Route>
       </Switch>
     </div>

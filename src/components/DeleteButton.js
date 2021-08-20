@@ -1,6 +1,6 @@
 const DeleteButton = (props) => {
 	return (
-		<button onClick={() => props.onDelete(props.id)}>Delete</button>
+		<span className="delete-btn" onClick={() => props.onDelete(props.id)}>Delete</span>
 	)
 }
 
