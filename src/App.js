@@ -4,7 +4,7 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Add from './pages/Add';
-import About from './pages/About';
+import Favorites from './pages/Favorites';
 import Single from './pages/Single';
 
 function App() {
@@ -53,8 +53,8 @@ function App() {
         <Route path='/add'>
           <Add onAdd={addItem} />
         </Route>
-        <Route path='/about'>
-          <About />
+        <Route path='/favorites'>
+          <Favorites />
         </Route>
         <Route path='/single/:id'>
           <Single onUpdate={upadeteItem} />
