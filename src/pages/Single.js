@@ -79,7 +79,7 @@ const Single = (props) => {
 				<div>
 					<input type='submit' value='Save' />
 					<DeleteButton id={id} onDelete={deleteItem} />
-					<FavoriteButton id={id} onFavorite={toggleFavoriteStatusHandler} isFavorite={singleIsFavorite} />
+					<FavoriteButton id={id} onFavorite={toggleFavoriteStatusHandler} />
 				</div>
 			</form>
 		</div>

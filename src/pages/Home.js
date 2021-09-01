@@ -73,7 +73,7 @@ const Home = (props) => {
 				<div key={item.id}>
 					<Item item={item} />
 					<DeleteButton id={item.id} onDelete={deleteItem} />
-					<FavoriteButton item={item} onFavorite={toggleFavoriteStatusHandler} />
+					<FavoriteButton id={item.id} item={item} onFavorite={toggleFavoriteStatusHandler} />
 				</div>
 			))}
 		</div>

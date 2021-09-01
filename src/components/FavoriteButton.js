@@ -1,6 +1,13 @@
+import { useContext } from 'react';
+
+import FavoritesContext from '../context/favorites-context';
+
 const FavoriteButton = (props) => {
+	const favoritesCtx = useContext(FavoritesContext);
+	const singleIsFavorite = favoritesCtx.itemIsFavorite(props.id);
+
 	return (
-		<span className="delete-btn" onClick={() => props.onFavorite(props.item)}>{props.isFavorite ? 'Not Favorite' : 'To Favorites'}</span>
+		<span className="delete-btn" onClick={() => props.onFavorite(props.item)}>{singleIsFavorite ? 'Not Favorite' : 'To Favorites'}</span>
 	)
 }
 
