@@ -1,7 +1,7 @@
-import './App.css';
-import Header from './components/layout/Header'
 import { Route, Switch, useHistory } from 'react-router-dom';
+import './App.css';
 
+import Header from './components/layout/Header';
 import Home from './pages/Home';
 import Add from './pages/Add';
 import Favorites from './pages/Favorites';
@@ -27,6 +27,7 @@ function App() {
       history.replace('/')
     });
   } 
+
 
   function upadeteItem(obj){
     fetch(

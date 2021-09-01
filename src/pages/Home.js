@@ -1,10 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react';
+import { useHistory } from "react-router-dom";
 
 import Item from '../components/Item';
+import DeleteButton from '../components/DeleteButton';
+import FavoriteButton from '../components/FavoriteButton';
+import FavoritesContext from '../context/favorites-context';
 
 const Home = (props) => {
+	const favoritesCtx = useContext(FavoritesContext);
+	const history = useHistory();
 	const [isLoaded, setIsLoaded] = useState(true)
-	const[items, setItems] = useState([])
+	const [items, setItems] = useState([])
 
 	useEffect(() => {
 		setIsLoaded(true);
@@ -26,6 +32,7 @@ const Home = (props) => {
 		})
 	}, [])
 
+
 	function deleteItem(id){
     fetch(
       `https://react-crud-cd5ea-default-rtdb.firebaseio.com/items/${id}.json`,
@@ -35,6 +42,22 @@ const Home = (props) => {
     )
 		setItems(items.filter((item) => item.id !== id))
   }
+
+
+	function toggleFavoriteStatusHandler(item){
+		const singleIsFavorite = favoritesCtx.itemIsFavorite(item.id);
+		if(singleIsFavorite){
+			favoritesCtx.removeFavorite(item.id);
+		} else {
+			favoritesCtx.addFavorite({
+				id: item.id,
+				text: item.text,
+				title: item.title
+			})
+		}
+		history.replace('/favorites/')
+	}
+
 	
 	if(isLoaded){
 		return (
@@ -47,7 +70,11 @@ const Home = (props) => {
 	return (
 		<div>
 			{items.map((item) => (
-				<Item key={item.id} item={item} onDelete={deleteItem} />
+				<div key={item.id}>
+					<Item item={item} />
+					<DeleteButton id={item.id} onDelete={deleteItem} />
+					<FavoriteButton item={item} onFavorite={toggleFavoriteStatusHandler} />
+				</div>
 			))}
 		</div>
 	)

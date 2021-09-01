@@ -1,29 +1,17 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams } from "react-router-dom";
-
-import { useHistory } from 'react-router-dom';
+import { useParams, useHistory } from "react-router-dom";
 
 import DeleteButton from '../components/DeleteButton';
 import FavoriteButton from '../components/FavoriteButton';
 import FavoritesContext from '../context/favorites-context';
 
 const Single = (props) => {
-	const favoritesCtx = useContext(FavoritesContext);
 	//getting param from URL
 	const { id } = useParams();
+	const favoritesCtx = useContext(FavoritesContext);
+	const singleIsFavorite = favoritesCtx.itemIsFavorite(id);
 	const history = useHistory();
 	const [item, setItem] = useState({text: '', title: ''});
-	const singleIsFavorite = favoritesCtx.itemIsFavorite(id);
-
-	const onSubmit = (e) => {
-		e.preventDefault()
-
-		if(!item.title || !item.text){
-			alert('You have to fill all fields')
-		}
-
-		props.onUpdate({id, item})
-	}
 
 	useEffect(() => {
 		fetch(
@@ -35,16 +23,6 @@ const Single = (props) => {
 		})
 	}, [id])
 
-	function deleteItem(id){
-    fetch(
-      `https://react-crud-cd5ea-default-rtdb.firebaseio.com/items/${id}.json`,
-      {
-        method: 'DELETE'
-      }
-    ).then(() => {
-			history.replace('/');
-		})
-  }
 
 	//Enabling editing input fields in form
 	function handleInputChange(e){
@@ -53,6 +31,28 @@ const Single = (props) => {
 		const name = target.name;
 		setItem({...item, [name]: value});
 	}
+
+
+	const onSubmit = (e) => {
+		e.preventDefault()
+		if(!item.title || !item.text){
+			alert('You have to fill all fields')
+		}
+		props.onUpdate({id, item})
+	}
+
+
+	function deleteItem(id){
+    fetch(
+      `https://react-crud-cd5ea-default-rtdb.firebaseio.com/items/${id}.json`,
+      {
+        method: 'DELETE'
+      }
+    ).then(() => {
+      history.replace('/')
+    });
+  }
+
 
 	function toggleFavoriteStatusHandler(){
 		if(singleIsFavorite){
@@ -64,6 +64,7 @@ const Single = (props) => {
 				title: item.title
 			})
 		}
+		history.replace('/favorites/')
 	}
 
 	return (
